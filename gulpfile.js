@@ -1,3 +1,12 @@
+// Web dev is weird and so is this file. Compiling things like SCSS, Pug.js,
+// and TypeScript is very formulaic so to avoid that and reduce magics, the
+// file is broken into two sections. Every compilation thing that needs to be
+// done is given a metacompiler with the naming convention <thing>_compiler.
+// That function takes in the path of the file to be compiled, the output
+// and the name of the task that will do that compiling. It returns an
+// anonymous function that does that compiling. There are then exports that
+// run tons of these constructed anonymous functions in parallel.
+
 const { src, dest, parallel } = require('gulp');
 var sass = require('gulp-sass')(require('sass'));
 var autoprefixer = require('gulp-autoprefixer');
@@ -6,6 +15,7 @@ const pug = require('gulp-pug');
 var ts = require('gulp-typescript');
 var webpack = require('webpack-stream');
 
+// TODO: Remove
 var Paths = {
     HERE: './',
     DIST: './dist/',
