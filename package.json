@@ -1,0 +1,27 @@
+{
+  "name": "lakewood.ai",
+  "version": "1.0.0",
+  "description": "The frontend for lakewood.ai",
+  "main": "index.js",
+  "repository": "https://github.com/Lakewood-High-School/lakewood.ai",
+  "author": "Lakewood High School",
+  "license": "MIT",
+  "packageManager": "yarn@3.6.3",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean": "^0.4.0",
+    "gulp-install": "^1.1.0",
+    "gulp-open": "^3.0.1",
+    "gulp-pug": "^5.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "sass": "^1.49.9",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "webpack": "^5.88.2",
+    "webpack-stream": "^7.0.0"
+  }
+}
