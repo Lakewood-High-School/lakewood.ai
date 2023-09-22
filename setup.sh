@@ -1,4 +1,4 @@
-APACHE_CONFIG_PATH=/etc/apache2-test/sites-available/lakewood.ai.conf
+APACHE_CONFIG_PATH=/etc/apache2/sites-available/lakewood.ai.conf
 
 function CreateConfigurationFile() {
 	printf "Creating configuration file symlink"
