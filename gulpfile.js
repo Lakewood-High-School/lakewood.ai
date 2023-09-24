@@ -76,7 +76,7 @@ function pack_js(input, output, task_name) {
 
 // SCSS
 exports.compile_scss = parallel(
-    scss_compiler(Paths.SCSS_TOOLKIT_SOURCES, Paths.CSS, 'compile_scss_toolkit'),
+    //scss_compiler(Paths.SCSS_TOOLKIT_SOURCES, Paths.CSS, 'compile_scss_toolkit'),
     scss_compiler('./src/home/scss/style.scss', './dist/home/css/', 'compile_scss_home')
 );
 

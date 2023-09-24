@@ -1,1 +1,12 @@
-@import "import_test.scss"
+// Google fonts and icons
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons+Round";
+
+// Nucleo Icons
+@import "../../../dist/assets/css/nucleo-icons.css";
+@import "../../../dist/assets/css/nucleo-svg.css";
+
+// Primary material dashboard scss
+@import "../../../dist/assets/scss/material-dashboard.scss";
+
+@import "import_test.scss";

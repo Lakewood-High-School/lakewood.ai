@@ -1,40 +1,37 @@
-doctype html 
+doctype html
 html(lang="en")
-  head 
+  head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
     link(rel="apple-touch-icon", sizes="76x76", href="../assets/img/apple-icon.png")
     link(rel="icon", type="image/png", href="../assets/img/favicon.png")
-    title Material Dashboard by Creative Tim 
-    
-    //- Fonts and Icons
-    link(href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700", rel="stylesheet")
-
-    //- Nucleo Icons
-    link(href="../assets/css/nucleo-icons.css", rel="stylesheet")
-    link(href="../assets/css/nucleo-svg.css", rel="stylesheet")
-
-    //- Font Awesome Icons
-    script(src="https://kit.fontawesome.com/42d5adcbca.js", crossorigin="anonymous")
-    link(href="../assets/css/nucleo-svg.css", rel="stylesheet")
+    title Material Dashboard by Creative Tim
 
     //- CSS Files
-    link#pagestyle(href="../assets/css/material-dashboard.css", rel="stylesheet")
     link(rel="stylesheet", href="css/style.css")
-  
-  body.g-sidenav-show.bg-gray-100 
-    h1.label Hello, World! 
+
+  body.g-sidenav-show.bg-gray-100.dark-version
+    h1.label Hello, World!
+
+    .card.card-frame(data-animation="true")
+      .card-body
+        span This is some text within a card body.
+        button.btn.btn-primary(type="button") Button
+        button.btn.btn-icon.btn-3.btn-primary(type="button")
+          span.btn-inner--icon: i.material-icons play_arrow
+          span.btn-inner--text With icon
+        button.btn.btn-icon.btn-2.btn-primary(type="button")
+          span.btn-inner--icon: i.material-icons lightbulb
 
     //- Core JS Files
     script(src="../assets/js/core/popper.min.js")
     script(src="../assets/js/core/bootstrap.min.js")
 
     //- Plugin for the charts
-    script(src="../assets/js/plugins/charjs.min.js")
-    script(src="../assets/js/pluging/Chart.extension.js")
+    script(src="../assets/js/plugins/chartjs.min.js")
 
     //- Primary Material Dashboard javascript file
-    script(src="../assets/js/materialndashboard.min.js")
+    script(src="../assets/js/material-dashboard.min.js")
 
     //- Compiled TypeScript
     script(src="js/main.js")
