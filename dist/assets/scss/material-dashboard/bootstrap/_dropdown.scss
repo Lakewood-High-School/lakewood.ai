@@ -99,7 +99,7 @@
     }
 
     .dropdown-menu#{$infix}-end {
-      --bs-position: end;
+      --bs-position: flex-end;
 
       &[data-bs-popper] {
         right: 0;
