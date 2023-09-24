@@ -15,23 +15,13 @@ const pug = require('gulp-pug');
 var ts = require('gulp-typescript');
 var webpack = require('webpack-stream');
 
-// TODO: Remove
-var Paths = {
-    HERE: './',
-    DIST: './dist/',
-    CSS: './dist/assets/css/',
-    SCSS_TOOLKIT_SOURCES: './dist/assets/scss/material-dashboard.scss',
-};
-
 // -------- Compilers
 
 // Returns a function that compiles the scss file(s) in input to css in output
 function scss_compiler(input, output, task_name) {
     const fn = () => src(input)
-        .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer())
-        .pipe(sourcemaps.write('.'))
         .pipe(dest(output));
 
     fn.displayName = task_name;
