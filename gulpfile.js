@@ -7,7 +7,7 @@
 // anonymous function that does that compiling. There are then exports that
 // run tons of these constructed anonymous functions in parallel.
 
-const { src, dest, parallel } = require('gulp');
+const { src, dest, parallel, series } = require('gulp');
 var sass = require('gulp-sass')(require('sass'));
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
@@ -64,7 +64,7 @@ function ts_compiler(input, output, task_name) {
 function pack_js(input, output, task_name) {
     const fn = () => src(input)
         .pipe(webpack({
-            mode: 'development'
+            mode: 'production'
         }))
         .pipe(dest(output))
 
@@ -95,9 +95,11 @@ exports.pack_compiled_ts = parallel(
     pack_js('./dist/home/ts/script.js', './dist/home/js/', 'pack_ts_home')
 );
 
-exports.build_site = parallel(
-    this.compile_scss,
-    this.compile_pug,
-    this.compile_ts,
+exports.build_site = series(
+    parallel(
+        this.compile_scss,
+        this.compile_pug,
+        this.compile_ts,
+    ),
     this.pack_compiled_ts
 );
