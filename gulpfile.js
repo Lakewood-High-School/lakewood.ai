@@ -62,6 +62,15 @@ function pack_js(input, output, task_name) {
     return fn;
 }
 
+// Move a file(s) unchanged
+function pass(input, output, task_name) {
+    const fn = () => src(input)
+        .pipe(dest(output))
+
+    fn.displayName = task_name;
+    return fn;
+}
+
 // -------- Exports
 
 // SCSS
@@ -85,11 +94,17 @@ exports.pack_compiled_ts = parallel(
     pack_js('./dist/home/ts/script.js', './dist/home/js/', 'pack_ts_home')
 );
 
+// Pass
+exports.pass = parallel(
+    pass('./src/home/SpartanFullLogo.png', './dist/home/', 'pass_lhs_logo_home')
+);
+
 exports.build_site = series(
     parallel(
         this.compile_scss,
         this.compile_pug,
         this.compile_ts,
+        this.pass
     ),
     this.pack_compiled_ts
 );
