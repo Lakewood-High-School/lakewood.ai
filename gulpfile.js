@@ -7,7 +7,7 @@
 // anonymous function that does that compiling. There are then exports that
 // run tons of these constructed anonymous functions in parallel.
 
-const { src, dest, parallel } = require('gulp');
+const { src, dest, parallel, series } = require('gulp');
 var sass = require('gulp-sass')(require('sass'));
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
@@ -15,23 +15,13 @@ const pug = require('gulp-pug');
 var ts = require('gulp-typescript');
 var webpack = require('webpack-stream');
 
-// TODO: Remove
-var Paths = {
-    HERE: './',
-    DIST: './dist/',
-    CSS: './dist/assets/css/',
-    SCSS_TOOLKIT_SOURCES: './dist/assets/scss/material-dashboard.scss',
-};
-
 // -------- Compilers
 
 // Returns a function that compiles the scss file(s) in input to css in output
 function scss_compiler(input, output, task_name) {
     const fn = () => src(input)
-        .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer())
-        .pipe(sourcemaps.write('.'))
         .pipe(dest(output));
 
     fn.displayName = task_name;
@@ -64,8 +54,17 @@ function ts_compiler(input, output, task_name) {
 function pack_js(input, output, task_name) {
     const fn = () => src(input)
         .pipe(webpack({
-            mode: 'development'
+            mode: 'production'
         }))
+        .pipe(dest(output))
+
+    fn.displayName = task_name;
+    return fn;
+}
+
+// Move a file(s) unchanged
+function pass(input, output, task_name) {
+    const fn = () => src(input)
         .pipe(dest(output))
 
     fn.displayName = task_name;
@@ -76,7 +75,7 @@ function pack_js(input, output, task_name) {
 
 // SCSS
 exports.compile_scss = parallel(
-    scss_compiler(Paths.SCSS_TOOLKIT_SOURCES, Paths.CSS, 'compile_scss_toolkit'),
+    //scss_compiler(Paths.SCSS_TOOLKIT_SOURCES, Paths.CSS, 'compile_scss_toolkit'),
     scss_compiler('./src/home/scss/style.scss', './dist/home/css/', 'compile_scss_home')
 );
 
@@ -95,9 +94,17 @@ exports.pack_compiled_ts = parallel(
     pack_js('./dist/home/ts/script.js', './dist/home/js/', 'pack_ts_home')
 );
 
-exports.build_site = parallel(
-    this.compile_scss,
-    this.compile_pug,
-    this.compile_ts,
+// Pass
+exports.pass = parallel(
+    pass('./src/home/SpartanFullLogo.png', './dist/home/', 'pass_lhs_logo_home')
+);
+
+exports.build_site = series(
+    parallel(
+        this.compile_scss,
+        this.compile_pug,
+        this.compile_ts,
+        this.pass
+    ),
     this.pack_compiled_ts
 );
