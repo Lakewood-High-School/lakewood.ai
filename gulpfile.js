@@ -8,9 +8,9 @@
 // run tons of these constructed anonymous functions in parallel.
 
 const { src, dest, parallel, series } = require('gulp');
+var { existsSync } = require('fs');
 var sass = require('gulp-sass')(require('sass'));
 var autoprefixer = require('gulp-autoprefixer');
-var sourcemaps = require('gulp-sourcemaps');
 const pug = require('gulp-pug');
 var ts = require('gulp-typescript');
 var webpack = require('webpack-stream');
@@ -43,6 +43,7 @@ function ts_compiler(input, output, task_name) {
     const fn = () => src(input)
         .pipe(ts({
             noImplicitAny: true,
+            rootDir: './src'
         }))
         .pipe(dest(output));
 
@@ -74,9 +75,12 @@ function pass(input, output, task_name) {
 // -------- Exports
 
 // SCSS
-exports.compile_scss = parallel(
-    //scss_compiler(Paths.SCSS_TOOLKIT_SOURCES, Paths.CSS, 'compile_scss_toolkit'),
-    scss_compiler('./src/home/scss/style.scss', './dist/home/css/', 'compile_scss_home')
+const compile_scss_kit = () =>
+    existsSync('./dist/kit.css') ? Promise.resolve()
+        : scss_compiler('./src/kit.scss', './dist', '')();
+exports.compile_scss = series(
+    scss_compiler('./src/home/scss/style.scss', './dist/home/css/', 'compile_scss_home'),
+    compile_scss_kit
 );
 
 // Pug
@@ -85,8 +89,12 @@ exports.compile_pug = parallel(
 );
 
 // Typescript
+const compile_ts_kit = () =>
+    existsSync('./dist/kit.js') ? Promise.resolve()
+        : ts_compiler('./src/kit.ts', './dist', '')();
 exports.compile_ts = parallel(
-    ts_compiler('./src/home/typescript/*', './dist/home/ts/', 'compile_ts_home')
+    ts_compiler('./src/home/typescript/*', './dist/home/ts/', 'compile_ts_home'),
+    compile_ts_kit
 );
 
 // Webpack
@@ -100,7 +108,7 @@ exports.pass = parallel(
 );
 
 exports.build_site = series(
-    parallel(
+    series(
         this.compile_scss,
         this.compile_pug,
         this.compile_ts,
