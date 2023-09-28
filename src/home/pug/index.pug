@@ -8,20 +8,30 @@ html(lang="en")
     title Material Dashboard by Creative Tim
 
     //- CSS Files
+    link(rel="stylesheet", href="../kit.css")
     link(rel="stylesheet", href="css/style.css")
 
   body.g-sidenav-show.bg-gray-100.dark-version
-    h1.label Hello, World!
+    .sidenav.navbar.navbar-vertical.navbar-expand-xs.border-0.border-radius-xl.my-3.fixed-start.ms-3.bg-gradient-dark
+      .collapse.navbar-collapse.w-auto.ps
+        ul.navbar-nav
+          li.nav-item
+            a.nav-link.text-white.bg-gradient-primary.active(href="#") Active
+          li.nav-item
+            a.nav-link.text-white(href="#") Link
+          li.nav-item
+            a.nav-link.text-white(href="#") Link
+          li.nav-item
+            a.nav-link.text-white.disabled(aria-disabled="true") Disabled
 
-    .card.card-frame(data-animation="true")
-      .card-body
-        span This is some text within a card body.
-        button.btn.btn-primary(type="button") Button
-        button.btn.btn-icon.btn-3.btn-primary(type="button")
-          span.btn-inner--icon: i.material-icons play_arrow
-          span.btn-inner--text With icon
-        button.btn.btn-icon.btn-2.btn-primary(type="button")
-          span.btn-inner--icon: i.material-icons lightbulb
+    .main-content.position-relative.max-height-vh-100.h-100.border-radius-lg.ps.ps--active-y
+      #main-page.container-fluid.py-4
+        p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Integer quis auctor elit sed vulputate. Erat pellentesque adipiscing commodo elit at imperdiet dui accumsan. Turpis egestas maecenas pharetra convallis posuere morbi. Tortor posuere ac ut consequat semper viverra. Ipsum dolor sit amet consectetur adipiscing. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Massa eget egestas purus viverra accumsan in nisl. A arcu cursus vitae congue mauris. Aliquet nibh praesent tristique magna sit amet purus gravida. Risus nec feugiat in fermentum. Libero id faucibus nisl tincidunt eget nullam non nisi est. Consequat semper viverra nam libero justo laoreet sit amet. Arcu ac tortor dignissim convallis aenean et tortor. Tellus in metus vulputate eu. Id donec ultrices tincidunt arcu non sodales neque sodales. Tristique senectus et netus et. Nulla pellentesque dignissim enim sit amet venenatis urna cursus. Lacus vestibulum sed arcu non odio euismod lacinia.
+        p Ridiculus mus mauris vitae ultricies leo. Semper auctor neque vitae tempus quam pellentesque nec nam aliquam. Quis auctor elit sed vulputate mi sit amet mauris. Egestas sed tempus urna et pharetra. Est ullamcorper eget nulla facilisi etiam. Accumsan tortor posuere ac ut consequat semper viverra nam libero. Eget magna fermentum iaculis eu non. Adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna. Blandit libero volutpat sed cras ornare arcu dui vivamus arcu. Eu mi bibendum neque egestas.
+        p Amet mattis vulputate enim nulla aliquet porttitor. Aenean vel elit scelerisque mauris. Tortor posuere ac ut consequat semper. Id faucibus nisl tincidunt eget nullam non nisi. Viverra nam libero justo laoreet sit amet cursus sit amet. Ultrices gravida dictum fusce ut placerat orci nulla. Ultrices gravida dictum fusce ut placerat orci nulla. Amet tellus cras adipiscing enim eu turpis egestas pretium. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis. Ut tristique et egestas quis. Laoreet non curabitur gravida arcu ac tortor. Metus dictum at tempor commodo ullamcorper a lacus.
+        p Mattis nunc sed blandit libero volutpat. Etiam erat velit scelerisque in. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula. Orci dapibus ultrices in iaculis nunc sed augue lacus. Diam quis enim lobortis scelerisque. Non curabitur gravida arcu ac tortor dignissim. Aliquet eget sit amet tellus cras adipiscing enim. Laoreet suspendisse interdum consectetur libero id. Pharetra convallis posuere morbi leo. Tortor aliquam nulla facilisi cras. Cras tincidunt lobortis feugiat vivamus at.
+        p Sollicitudin ac orci phasellus egestas tellus. Convallis convallis tellus id interdum velit laoreet id donec ultrices. Habitant morbi tristique senectus et. Viverra vitae congue eu consequat ac felis. Donec ac odio tempor orci dapibus ultrices in. Etiam erat velit scelerisque in dictum. Fames ac turpis egestas maecenas pharetra convallis. Proin nibh nisl condimentum id venenatis a. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Elementum integer enim neque volutpat ac tincidunt vitae. Sodales neque sodales ut etiam sit amet nisl purus. Nam libero justo laoreet sit amet cursus sit amet. Elit ut aliquam purus sit amet.
+    
 
     //- Compiled TypeScript
     script(src="js/main.js")
