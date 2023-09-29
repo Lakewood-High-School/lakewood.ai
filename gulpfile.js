@@ -78,14 +78,16 @@ function pass(input, output, task_name) {
 const compile_scss_kit = () =>
     existsSync('./dist/kit.css') ? Promise.resolve()
         : scss_compiler('./src/kit.scss', './dist', '')();
-exports.compile_scss = series(
+exports.compile_scss = parallel(
     scss_compiler('./src/home/scss/style.scss', './dist/home/css/', 'compile_scss_home'),
+    scss_compiler('./src/test/scss/style.scss', './dist/test/css/', 'compile_scss_test'),
     compile_scss_kit
 );
 
 // Pug
 exports.compile_pug = parallel(
-    pug_compiler('./src/home/pug/index.pug', './dist/home/', 'compile_pug_home')
+    pug_compiler('./src/home/pug/index.pug', './dist/home/', 'compile_pug_home'),
+    pug_compiler('./src/test/pug/index.pug', './dist/test/', 'compile_pug_test'),
 );
 
 // Typescript
@@ -94,21 +96,23 @@ const compile_ts_kit = () =>
         : ts_compiler('./src/kit.ts', './dist', '')();
 exports.compile_ts = parallel(
     ts_compiler('./src/home/typescript/*', './dist/home/ts/', 'compile_ts_home'),
+    ts_compiler('./src/test/typescript/*', './dist/test/ts/', 'compile_ts_test'),
     compile_ts_kit
 );
 
 // Webpack
 exports.pack_compiled_ts = parallel(
-    pack_js('./dist/home/ts/script.js', './dist/home/js/', 'pack_ts_home')
+    pack_js('./dist/home/ts/script.js', './dist/home/js/', 'pack_ts_home'),
+    pack_js('./dist/test/ts/script.js', './dist/test/js/', 'pack_ts_test'),
 );
 
 // Pass
 exports.pass = parallel(
-    pass('./src/home/SpartanFullLogo.png', './dist/home/', 'pass_lhs_logo_home')
+    pass('./src/SpartanFullLogo.png', './dist/', 'pass_lhs_logo_home')
 );
 
 exports.build_site = series(
-    series(
+    parallel(
         this.compile_scss,
         this.compile_pug,
         this.compile_ts,

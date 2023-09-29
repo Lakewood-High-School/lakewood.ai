@@ -1,0 +1,16 @@
+-
+  const page = {
+    'home': ["Dashboard", '../home/index.html'],
+    'test': ["Test", '../test/index.html']
+  }
+
+mixin sidenav-item(active, name, path)
+  li.nav-item
+    a.nav-link.text-white(class={"bg-gradient-primary active": active}, href=path)= name
+
+.sidenav.navbar.navbar-vertical.navbar-expand-xs.border-0.border-radius-xl.my-3.fixed-start.ms-3.bg-gradient-dark
+  .collapse.navbar-collapse.w-auto.ps
+    ul.navbar-nav
+      each info, name in page
+        - const show_image = name === current_page
+        +sidenav-item(show_image, info[0], info[1])
