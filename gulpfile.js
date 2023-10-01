@@ -17,6 +17,7 @@ import autoprefixer from 'gulp-autoprefixer';
 import pug from 'gulp-pug';
 import ts from 'gulp-typescript';
 import webpack from 'webpack-stream';
+import { deleteAsync } from 'del';
 
 // -------- Compilers
 
@@ -54,6 +55,8 @@ function ts_compiler(input, output, task_name) {
     return fn;
 }
 
+// -------- Miscellaneous
+
 // Returns a function that packs a js file in input to output
 function pack_js(input, output, task_name) {
     const fn = () => src(input)
@@ -70,6 +73,14 @@ function pack_js(input, output, task_name) {
 function pass_file(input, output, task_name) {
     const fn = () => src(input)
         .pipe(dest(output))
+
+    fn.displayName = task_name;
+    return fn;
+}
+
+// Delete a folder
+function clean_folder(folder, task_name) {
+    const fn = () => deleteAsync(folder);
 
     fn.displayName = task_name;
     return fn;
@@ -114,6 +125,12 @@ export const pass = parallel(
     pass_file('./src/SpartanFullLogo.png', './dist/', 'pass_lhs_logo_home')
 );
 
+// Clean
+export const clean_ts = parallel(
+    clean_folder('./dist/home/ts', 'clean_ts_home'),
+    clean_folder('./dist/test/ts', 'clean_ts_test')
+)
+
 export const build_site = series(
     parallel(
         compile_scss,
@@ -122,4 +139,5 @@ export const build_site = series(
         pass
     ),
     pack_compiled_ts,
+    clean_ts
 );

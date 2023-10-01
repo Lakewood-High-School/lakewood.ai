@@ -18,6 +18,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "del": "^7.1.0",
     "webpack": "^5.88.2",
     "webpack-stream": "^7.0.0"
   }
