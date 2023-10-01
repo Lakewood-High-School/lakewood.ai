@@ -7,13 +7,16 @@
 // anonymous function that does that compiling. There are then exports that
 // run tons of these constructed anonymous functions in parallel.
 
-const { src, dest, parallel, series } = require('gulp');
-var { existsSync } = require('fs');
-var sass = require('gulp-sass')(require('sass'));
-var autoprefixer = require('gulp-autoprefixer');
-const pug = require('gulp-pug');
-var ts = require('gulp-typescript');
-var webpack = require('webpack-stream');
+import gulp from 'gulp';
+const { src, dest, parallel, series } = gulp;
+import { existsSync } from 'fs';
+import * as sass_import from 'sass';
+import gulpSass from 'gulp-sass';
+const sass = gulpSass(sass_import);
+import autoprefixer from 'gulp-autoprefixer';
+import pug from 'gulp-pug';
+import ts from 'gulp-typescript';
+import webpack from 'webpack-stream';
 
 // -------- Compilers
 
@@ -64,7 +67,7 @@ function pack_js(input, output, task_name) {
 }
 
 // Move a file(s) unchanged
-function pass(input, output, task_name) {
+function pass_file(input, output, task_name) {
     const fn = () => src(input)
         .pipe(dest(output))
 
@@ -78,14 +81,14 @@ function pass(input, output, task_name) {
 const compile_scss_kit = () =>
     existsSync('./dist/kit.css') ? Promise.resolve()
         : scss_compiler('./src/kit.scss', './dist', '')();
-exports.compile_scss = parallel(
+export const compile_scss = parallel(
     scss_compiler('./src/home/scss/style.scss', './dist/home/css/', 'compile_scss_home'),
     scss_compiler('./src/test/scss/style.scss', './dist/test/css/', 'compile_scss_test'),
     compile_scss_kit
 );
 
 // Pug
-exports.compile_pug = parallel(
+export const compile_pug = parallel(
     pug_compiler('./src/home/pug/index.pug', './dist/home/', 'compile_pug_home'),
     pug_compiler('./src/test/pug/index.pug', './dist/test/', 'compile_pug_test'),
 );
@@ -94,29 +97,29 @@ exports.compile_pug = parallel(
 const compile_ts_kit = () =>
     existsSync('./dist/kit.js') ? Promise.resolve()
         : ts_compiler('./src/kit.ts', './dist', '')();
-exports.compile_ts = parallel(
+export const compile_ts = parallel(
     ts_compiler('./src/home/typescript/*', './dist/home/ts/', 'compile_ts_home'),
     ts_compiler('./src/test/typescript/*', './dist/test/ts/', 'compile_ts_test'),
     compile_ts_kit
 );
 
 // Webpack
-exports.pack_compiled_ts = parallel(
+export const pack_compiled_ts = parallel(
     pack_js('./dist/home/ts/script.js', './dist/home/js/', 'pack_ts_home'),
     pack_js('./dist/test/ts/script.js', './dist/test/js/', 'pack_ts_test'),
 );
 
 // Pass
-exports.pass = parallel(
-    pass('./src/SpartanFullLogo.png', './dist/', 'pass_lhs_logo_home')
+export const pass = parallel(
+    pass_file('./src/SpartanFullLogo.png', './dist/', 'pass_lhs_logo_home')
 );
 
-exports.build_site = series(
+export const build_site = series(
     parallel(
-        this.compile_scss,
-        this.compile_pug,
-        this.compile_ts,
-        this.pass
+        compile_scss,
+        compile_pug,
+        compile_ts,
+        pass
     ),
-    this.pack_compiled_ts
+    pack_compiled_ts,
 );
